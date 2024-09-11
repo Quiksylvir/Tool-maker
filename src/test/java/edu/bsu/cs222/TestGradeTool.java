@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 public class TestGradeTool {
     @Test
-    public void testGradeIsNotVoid() {
+    public void testGradeIsNotFailing() {
         GradeTool grader = new GradeTool();
-        Boolean result = grader.failingGrade();
-        Assertions.assertTrue(result);
+        char result = grader.finalGrade('D');
+        Assertions.assertEquals(result, 'D');
     }
 }
