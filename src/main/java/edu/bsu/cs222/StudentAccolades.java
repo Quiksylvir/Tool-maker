@@ -20,4 +20,9 @@ public class StudentAccolades {
                     this.studentProjects = studentProjects;
                     this.finalReport = finalReport;
               }
+
+
+        public StudentAccolades(){
+            studentProjects = new StudentProjects();
+        }
 }

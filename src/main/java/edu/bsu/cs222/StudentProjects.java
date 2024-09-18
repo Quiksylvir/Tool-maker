@@ -21,4 +21,7 @@ public class StudentProjects {
                     this.finalProjectIterationThree = finalProjectIterationThree;
         }
 
+
+        public StudentProjects(){}
+
 }

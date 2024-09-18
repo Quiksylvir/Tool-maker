@@ -1,19 +1,36 @@
 package edu.bsu.cs222;
 
 public class GradeTool {
-    public char finalGrade(StudentAccolades student) {
-        char projectLetterGrade = gradeProjects(student);
-        return 'A';
+    private char finalLetterGrade;
+    GradeTool(){
+        finalLetterGrade = 'A';
     }
 
-    protected char gradeProjects(StudentAccolades student) {
-        gradeBeginnerProjects(student.studentProjects);
-        //gradeLastIteration(student.studentProjects);
-        return 'A';
+    protected char gradeAccolades(StudentAccolades student) {
+        updateFinalLetterGrade(gradeAssignments(student));
+        updateFinalLetterGrade(gradeAchievements(student));
+        updateFinalLetterGrade(gradeMidtermReport(student));
+        updateFinalLetterGrade(gradeBeginnerProjects(student.studentProjects));
+        updateFinalLetterGrade(gradeLastIteration(student.studentProjects));
+        updateFinalLetterGrade(gradeFinalReport(student));
+        return finalLetterGrade;
+    }
+    public char gradeAssignments(StudentAccolades studentProjects) {
+        return convertToLetterGrade(studentProjects.assignments-=4);
     }
 
-//    protected char gradeLastIteration(StudentProjects studentProjects) {
-//    }
+    public char gradeAchievements(StudentAccolades studentProjects) {
+        return convertToLetterGrade(studentProjects.achievements-=3);
+    }
+
+    public char gradeMidtermReport(StudentAccolades studentProjects) {
+        if (convertToLetterGrade(studentProjects.midTermReport) == 'A') {
+            return 'A';
+        } else {
+            return 'D';
+        }
+
+    }
 
     protected char gradeBeginnerProjects(StudentProjects studentProjects) {
         int gradeNumber = studentProjects.firstProjectCommandLine;
@@ -26,15 +43,41 @@ public class GradeTool {
         if (gradeNumber > studentProjects.finalProjectIterationTwo) {
             gradeNumber = studentProjects.finalProjectIterationTwo;
         }
-        return convertBeginnerProjectsToLetterGrade(gradeNumber);
+        return convertToLetterGrade(gradeNumber+2);
     }
 
 
-    public char convertBeginnerProjectsToLetterGrade(int gradeNumber) {
-        if(gradeNumber >= 1) {
-            return 'A';
+    protected char gradeLastIteration(StudentProjects studentProjects) {
+        if (convertToLetterGrade(studentProjects.finalProjectIterationThree) == 'D') {
+            return 'C';
         }else {
-            return 'D';
+            return convertToLetterGrade(studentProjects.finalProjectIterationThree);
         }
     }
+
+
+    public char gradeFinalReport(StudentAccolades studentProjects) {
+        return convertToLetterGrade(studentProjects.finalReport);
+    }
+
+    private char convertToLetterGrade(int accolade) {
+        if (accolade >= 3) {
+            return 'A';
+        } else if (accolade == 2) {
+            return 'B';
+        } else if (accolade == 1) {
+            return 'C';
+        } else if (accolade == 0) {
+            return 'D';
+        } else {
+            return 'F';
+        }
+    }
+    private void updateFinalLetterGrade(char letterGrade) {
+        if(letterGrade > finalLetterGrade) {
+            finalLetterGrade = letterGrade;
+        }
+    }
+
+
 }
