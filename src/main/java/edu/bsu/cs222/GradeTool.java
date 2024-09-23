@@ -1,36 +1,45 @@
 package edu.bsu.cs222;
 
 public class GradeTool {
-    private char finalLetterGrade;
-    GradeTool(){
-        finalLetterGrade = 'A';
-    }
 
     protected char gradeAccolades(StudentAccolades student) {
-        updateFinalLetterGrade(gradeAssignments(student));
-        updateFinalLetterGrade(gradeAchievements(student));
-        updateFinalLetterGrade(gradeMidtermReport(student));
-        updateFinalLetterGrade(gradeBeginnerProjects(student.studentProjects));
-        updateFinalLetterGrade(gradeLastIteration(student.studentProjects));
-        updateFinalLetterGrade(gradeFinalReport(student));
-        return finalLetterGrade;
-    }
-    public char gradeAssignments(StudentAccolades studentProjects) {
-        return convertToLetterGrade(studentProjects.assignments-=4);
+        gradeIndividualAssignments(student.studentIndividualAssignments);
+        gradeProjects(student.studentProjects);
+
+        return LetterGradeHandler.finalLetterGrade;
     }
 
-    public char gradeAchievements(StudentAccolades studentProjects) {
-        return convertToLetterGrade(studentProjects.achievements-=3);
+    protected void gradeIndividualAssignments(StudentIndividualAssignments studentIndividualAssignments){
+        LetterGradeHandler.updateFinalLetterGrade(gradeAssignments(studentIndividualAssignments));
+        LetterGradeHandler.updateFinalLetterGrade(gradeAchievements(studentIndividualAssignments));
+        LetterGradeHandler.updateFinalLetterGrade(gradeMidtermReport(studentIndividualAssignments));
+        LetterGradeHandler.updateFinalLetterGrade(gradeFinalReport(studentIndividualAssignments));
+    }
+    protected char gradeAssignments(StudentIndividualAssignments studentAssignments) {
+        return LetterGradeHandler.convertToLetterGrade(studentAssignments.assignments-=4);
     }
 
-    public char gradeMidtermReport(StudentAccolades studentProjects) {
-        if (convertToLetterGrade(studentProjects.midTermReport) == 'A') {
+    protected char gradeAchievements(StudentIndividualAssignments studentAchievements) {
+        return LetterGradeHandler.convertToLetterGrade(studentAchievements.achievements-=3);
+    }
+
+    protected char gradeMidtermReport(StudentIndividualAssignments studentMidterm) {
+        if (LetterGradeHandler.convertToLetterGrade(studentMidterm.midTermReport) == 'A') {
             return 'A';
         } else {
             return 'D';
         }
-
     }
+
+    protected char gradeFinalReport(StudentIndividualAssignments studentFinal) {
+        return LetterGradeHandler.convertToLetterGrade(studentFinal.finalReport);
+    }
+
+    protected void gradeProjects(StudentProjects studentProjects){
+        LetterGradeHandler.updateFinalLetterGrade(gradeBeginnerProjects(studentProjects));
+        LetterGradeHandler.updateFinalLetterGrade(gradeLastIteration(studentProjects));
+    }
+
 
     protected char gradeBeginnerProjects(StudentProjects studentProjects) {
         int gradeNumber = studentProjects.firstProjectCommandLine;
@@ -43,41 +52,14 @@ public class GradeTool {
         if (gradeNumber > studentProjects.finalProjectIterationTwo) {
             gradeNumber = studentProjects.finalProjectIterationTwo;
         }
-        return convertToLetterGrade(gradeNumber+2);
+        return LetterGradeHandler.convertToLetterGrade(gradeNumber+2);
     }
-
 
     protected char gradeLastIteration(StudentProjects studentProjects) {
-        if (convertToLetterGrade(studentProjects.finalProjectIterationThree) == 'D') {
+        if (LetterGradeHandler.convertToLetterGrade(studentProjects.finalProjectIterationThree) == 'D') {
             return 'C';
         }else {
-            return convertToLetterGrade(studentProjects.finalProjectIterationThree);
+            return LetterGradeHandler.convertToLetterGrade(studentProjects.finalProjectIterationThree);
         }
     }
-
-
-    public char gradeFinalReport(StudentAccolades studentProjects) {
-        return convertToLetterGrade(studentProjects.finalReport);
-    }
-
-    private char convertToLetterGrade(int accolade) {
-        if (accolade >= 3) {
-            return 'A';
-        } else if (accolade == 2) {
-            return 'B';
-        } else if (accolade == 1) {
-            return 'C';
-        } else if (accolade == 0) {
-            return 'D';
-        } else {
-            return 'F';
-        }
-    }
-    private void updateFinalLetterGrade(char letterGrade) {
-        if(letterGrade > finalLetterGrade) {
-            finalLetterGrade = letterGrade;
-        }
-    }
-
-
 }

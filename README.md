@@ -2,9 +2,11 @@ Grading by Specifications
 
 Timothy Smith
 
-Summary:
+Main entry through ValueInput. It is Initialized to Letter Grade A. Alter any values there.
 
-Grades by number of assignments and achievements reached
+Summary: 
+
+Grades by number of assignments and achievements reached.
 
 Grades by level of proficiency on all other categories
 
